@@ -1,12 +1,31 @@
+import Hero from "../Hero";
+import restaurants from "@/shared/data/restaurants";
+import RestaurantCard from "@/features/restaurants/components/RestaurantCard";
+
 function HomePage() {
   return (
-    <section className="container section">
+    <>
+      <Hero />
 
-      <h1>
-        Home
-      </h1>
+      <section className="container py-16">
 
-    </section>
+        <h2 className="mb-8 text-4xl font-bold">
+          Popular Restaurants
+        </h2>
+
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+
+          {restaurants.map((restaurant) => (
+            <RestaurantCard
+              key={restaurant.id}
+              restaurant={restaurant}
+            />
+          ))}
+
+        </div>
+
+      </section>
+    </>
   );
 }
 

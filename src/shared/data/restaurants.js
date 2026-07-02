@@ -1,7 +1,7 @@
 const restaurants = [{
         id: 1,
         name: "Burger Hub",
-        image: "/images/restaurants/burger.jpg",
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800",
         cuisine: ["Burger", "Fast Food"],
         rating: 4.7,
         deliveryTime: "25-30 min",
@@ -13,7 +13,7 @@ const restaurants = [{
     {
         id: 2,
         name: "Pizza Palace",
-        image: "/images/restaurants/pizza.jpg",
+        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800",
         cuisine: ["Pizza", "Italian"],
         rating: 4.6,
         deliveryTime: "30-35 min",
@@ -25,7 +25,7 @@ const restaurants = [{
     {
         id: 3,
         name: "Biryani House",
-        image: "/images/restaurants/biryani.jpg",
+        image: "https://images.unsplash.com/photo-1701579231349-d7459c40919d?w=800",
         cuisine: ["Biryani", "North Indian"],
         rating: 4.8,
         deliveryTime: "35-40 min",
@@ -37,7 +37,7 @@ const restaurants = [{
     {
         id: 4,
         name: "Green Bowl",
-        image: "/images/restaurants/salad.jpg",
+        image: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=800",
         cuisine: ["Healthy", "Salads"],
         rating: 4.5,
         deliveryTime: "20-25 min",
@@ -49,7 +49,7 @@ const restaurants = [{
     {
         id: 5,
         name: "Chinese Wok",
-        image: "/images/restaurants/chinese.jpg",
+        image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=800",
         cuisine: ["Chinese"],
         rating: 4.4,
         deliveryTime: "30 min",
@@ -58,6 +58,31 @@ const restaurants = [{
         isVeg: false,
         promoted: false,
     },
+    {
+        id: 6,
+        name: "Kadhai Paneer House",
+        image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800",
+        cuisine: ["North Indian", "Paneer", "Vegetarian"],
+        rating: 4.8,
+        deliveryTime: "25-30 min",
+        deliveryFee: 35,
+        priceForTwo: 650,
+        isVeg: true,
+        promoted: true,
+    },
+    {
+        id: 8,
+        name: "Paratha Junction",
+        image: "https://media.istockphoto.com/id/1951940755/photo/close-up-image-of-indian-breakfast-dish-buffet-triangular-slices-of-aloo-parathas-on-white.jpg?s=1024x1024&w=is&k=20&c=04NiX5aqrGFoVd-lQQerja_OUMtxMUrmgfNjScXG_uM=",
+        cuisine: ["Paratha", "Breakfast", "North Indian"],
+        rating: 4.6,
+        deliveryTime: "20-25 min",
+        deliveryFee: 25,
+        priceForTwo: 450,
+        isVeg: true,
+        promoted: false,
+    }
+
 ];
 
 export default restaurants;
