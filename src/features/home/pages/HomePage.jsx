@@ -1,4 +1,6 @@
 import Hero from "../Hero";
+import Categories from "../Categories";
+
 import restaurants from "@/shared/data/restaurants";
 import RestaurantCard from "@/features/restaurants/components/RestaurantCard";
 
@@ -6,6 +8,8 @@ function HomePage() {
   return (
     <>
       <Hero />
+
+      <Categories />
 
       <section className="container py-16">
 

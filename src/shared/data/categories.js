@@ -1,32 +1,62 @@
 const categories = [{
         id: 1,
         name: "Burger",
-        image: "/images/categories/burger.png",
+        emoji: "🍔",
     },
     {
         id: 2,
         name: "Pizza",
-        image: "/images/categories/pizza.png",
+        emoji: "🍕",
     },
     {
         id: 3,
         name: "Biryani",
-        image: "/images/categories/biryani.png",
+        emoji: "🍛",
     },
     {
         id: 4,
-        name: "Chinese",
-        image: "/images/categories/chinese.png",
+        name: "Paratha",
+        emoji: "🫓",
     },
     {
         id: 5,
-        name: "Desserts",
-        image: "/images/categories/dessert.png",
+        name: "Paneer",
+        emoji: "🧀",
     },
     {
         id: 6,
+        name: "Chinese",
+        emoji: "🍜",
+    },
+    {
+        id: 7,
+        name: "Healthy",
+        emoji: "🥗",
+    },
+    {
+        id: 8,
+        name: "Rolls",
+        emoji: "🌯",
+    },
+    {
+        id: 9,
+        name: "Chicken",
+        emoji: "🍗",
+    },
+    {
+        id: 10,
+        name: "Dessert",
+        emoji: "🍰",
+    },
+    {
+        id: 11,
+        name: "Coffee",
+        emoji: "☕",
+    },
+    {
+        id: 12,
         name: "Drinks",
-        image: "/images/categories/drinks.png",
+        emoji: "🥤",
     },
 ];
 
