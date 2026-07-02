@@ -1,17 +1,15 @@
 import { Outlet } from "react-router-dom";
 
+import Header from "@/shared/layout/Header";
+
 function PublicLayout() {
   return (
     <>
-      {/* Header */}
+      <Header />
 
       <main>
-
         <Outlet />
-
       </main>
-
-      {/* Footer */}
     </>
   );
 }
