@@ -23,7 +23,7 @@ function RestaurantDetailsPage() {
     );
   }
 
-  const restaurantMenu = menus[id] || {};
+  const restaurantMenu = menus[restaurant.id];
 
   return (
     <div className="container py-10">

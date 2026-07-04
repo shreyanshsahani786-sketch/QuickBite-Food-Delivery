@@ -10,18 +10,17 @@ api.interceptors.request.use(
 
         return config;
     },
-
     (error) => Promise.reject(error)
 );
 
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response ? .status === 401) {
+        if (error.response && error.response.status === 401) {
             console.error("Unauthorized");
         }
 
-        if (error.response ? .status === 500) {
+        if (error.response && error.response.status === 500) {
             console.error("Server Error");
         }
 

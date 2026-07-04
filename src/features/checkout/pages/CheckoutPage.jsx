@@ -1,35 +1,21 @@
 import { useState } from "react";
-
-import {
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
-
-import {
-  useDispatch,
-  useSelector,
-} from "react-redux";
-
+import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
-import {
-  placeOrder,
-} from "@/features/orders/orderSlice";
+import { placeOrder } from "@/features/orders/orderSlice";
+import { clearCart } from "@/features/cart/cartSlice";
 
 import {
-  selectIsAuthenticated,
   selectCurrentUser,
+  selectIsAuthenticated,
 } from "@/features/auth/selectors";
 
 function CheckoutPage() {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
-  const user = useSelector(
-    selectCurrentUser
-  );
-
+  const user = useSelector(selectCurrentUser);
   const isAuthenticated = useSelector(
     selectIsAuthenticated
   );
@@ -74,8 +60,10 @@ function CheckoutPage() {
 
   const deliveryFee = 40;
 
+  const gst = Math.round(subtotal * 0.05);
+
   const totalAmount =
-    subtotal + deliveryFee;
+    subtotal + deliveryFee + gst;
 
   const handlePlaceOrder = (event) => {
     event.preventDefault();
@@ -105,7 +93,9 @@ function CheckoutPage() {
         phone,
       },
 
-      items: cartItems,
+      items: cartItems.map((item) => ({
+        ...item,
+      })),
 
       address,
 
@@ -115,21 +105,24 @@ function CheckoutPage() {
 
       deliveryFee,
 
+      gst,
+
       totalAmount,
 
       status: "Order Confirmed",
 
-      createdAt:
-        new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     };
 
     dispatch(placeOrder(newOrder));
+
+    dispatch(clearCart());
 
     toast.success(
       "Order placed successfully!"
     );
 
-    navigate("/orders");
+    navigate("/order-success");
   };
 
   return (
@@ -195,7 +188,7 @@ function CheckoutPage() {
                       setAddress(event.target.value)
                     }
                     placeholder="House number, street, city, pincode..."
-                    rows="4"
+                    rows={4}
                     className="w-full resize-none rounded-xl border px-4 py-3 outline-none focus:border-orange-500"
                   />
                 </div>
@@ -237,9 +230,9 @@ function CheckoutPage() {
 
                   <input
                     type="radio"
-                    value="online"
+                    value="upi"
                     checked={
-                      paymentMethod === "online"
+                      paymentMethod === "upi"
                     }
                     onChange={(event) =>
                       setPaymentMethod(
@@ -249,7 +242,28 @@ function CheckoutPage() {
                   />
 
                   <span className="font-semibold">
-                    Online Payment
+                    UPI Payment
+                  </span>
+
+                </label>
+
+                <label className="flex cursor-pointer items-center gap-3 rounded-xl border p-4">
+
+                  <input
+                    type="radio"
+                    value="card"
+                    checked={
+                      paymentMethod === "card"
+                    }
+                    onChange={(event) =>
+                      setPaymentMethod(
+                        event.target.value
+                      )
+                    }
+                  />
+
+                  <span className="font-semibold">
+                    Credit / Debit Card
                   </span>
 
                 </label>
@@ -262,7 +276,7 @@ function CheckoutPage() {
               type="submit"
               className="w-full rounded-xl bg-orange-500 py-4 text-lg font-bold text-white transition hover:bg-orange-600"
             >
-              Place Order
+              Place Order • ₹{totalAmount}
             </button>
 
           </form>
@@ -287,15 +301,12 @@ function CheckoutPage() {
                     </p>
 
                     <p className="text-sm text-gray-500">
-                      Quantity:{" "}
-                      {item.quantity || 1}
+                      Quantity: {item.quantity}
                     </p>
                   </div>
 
                   <p className="font-semibold">
-                    ₹
-                    {item.price *
-                      (item.quantity || 1)}
+                    ₹{item.price * item.quantity}
                   </p>
 
                 </div>
@@ -313,6 +324,11 @@ function CheckoutPage() {
               <div className="flex justify-between">
                 <span>Delivery Fee</span>
                 <span>₹{deliveryFee}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>GST</span>
+                <span>₹{gst}</span>
               </div>
 
               <div className="flex justify-between border-t pt-4 text-xl font-bold">

@@ -15,7 +15,9 @@ const cartSlice = createSlice({
             const item = action.payload;
 
             const existingItem = state.items.find(
-                (cartItem) => cartItem.id === item.id
+                (cartItem) =>
+                cartItem.id === item.id &&
+                cartItem.restaurantId === item.restaurantId
             );
 
             if (existingItem) {
@@ -34,35 +36,56 @@ const cartSlice = createSlice({
                 });
             }
         },
+
         increaseQuantity(state, action) {
+            const { id, restaurantId } = action.payload;
+
             const item = state.items.find(
-                (i) => i.id === action.payload
+                (cartItem) =>
+                cartItem.id === id &&
+                cartItem.restaurantId === restaurantId
             );
 
             if (item) {
-                item.quantity++;
+                item.quantity += 1;
             }
         },
 
         decreaseQuantity(state, action) {
+            const { id, restaurantId } = action.payload;
+
             const item = state.items.find(
-                (i) => i.id === action.payload
+                (cartItem) =>
+                cartItem.id === id &&
+                cartItem.restaurantId === restaurantId
             );
 
-            if (!item) return;
+            if (!item) {
+                return;
+            }
 
             if (item.quantity === 1) {
                 state.items = state.items.filter(
-                    (i) => i.id !== action.payload
+                    (cartItem) =>
+                    !(
+                        cartItem.id === id &&
+                        cartItem.restaurantId === restaurantId
+                    )
                 );
             } else {
-                item.quantity--;
+                item.quantity -= 1;
             }
         },
 
         removeFromCart(state, action) {
+            const { id, restaurantId } = action.payload;
+
             state.items = state.items.filter(
-                (i) => i.id !== action.payload
+                (cartItem) =>
+                !(
+                    cartItem.id === id &&
+                    cartItem.restaurantId === restaurantId
+                )
             );
         },
 

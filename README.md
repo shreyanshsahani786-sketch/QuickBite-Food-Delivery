@@ -1,16 +1,109 @@
-# React + Vite
+# QuickBite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+QuickBite is a modern food delivery frontend application built with React and Vite. It provides a responsive food-ordering experience with restaurant browsing, menus, wishlist, cart management, authentication, checkout, and order tracking.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Responsive modern UI
+- Restaurant listing
+- Restaurant details and menus
+- Search and filtering
+- Wishlist functionality
+- Add to Cart
+- Increase and decrease item quantity
+- Remove and clear cart
+- Persistent cart using localStorage
+- Login and registration
+- User profile
+- Checkout flow
+- Multiple payment method UI
+- Order placement
+- Order history
+- Toast notifications
+- Redux state management
+- Client-side routing
+- Production-ready Vite build
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React.js
+- JavaScript
+- Vite
+- Tailwind CSS
+- Redux Toolkit
+- React Redux
+- React Router DOM
+- Axios
+- Framer Motion
+- React Hot Toast
+- React Icons
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+src/
+├── app/
+│   ├── providers/
+│   ├── router/
+│   └── store/
+├── features/
+│   ├── auth/
+│   ├── cart/
+│   ├── checkout/
+│   ├── home/
+│   ├── orders/
+│   ├── profile/
+│   ├── restaurants/
+│   ├── search/
+│   └── wishlist/
+└── shared/
+    ├── components/
+    ├── constants/
+    ├── data/
+    ├── hooks/
+    ├── layouts/
+    └── services/
+
+## Installation
+
+Clone the repository:
+
+git clone YOUR_REPOSITORY_URL
+
+Move into the project directory:
+
+cd quickbite
+
+Install dependencies:
+
+npm install
+
+Start the development server:
+
+npm run dev
+
+Create a production build:
+
+npm run build
+
+Run ESLint:
+
+npm run lint
+
+## Current Data Architecture
+
+QuickBite currently uses local JavaScript data and browser localStorage for frontend demonstration purposes.
+
+The Axios service layer is structured so that a backend REST API can be integrated in the future.
+
+## Future Improvements
+
+- Backend REST API
+- Database integration
+- JWT authentication
+- Real payment gateway
+- Live order tracking
+- Restaurant admin dashboard
+
+## Author
+
+Shreyansh Sahani
