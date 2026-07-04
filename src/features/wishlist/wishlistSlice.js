@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loadWishlist } from "./utils";
 
 const initialState = {
-    restaurants: [],
-    foods: [],
+    items: loadWishlist(),
 };
 
 const wishlistSlice = createSlice({
@@ -11,36 +11,50 @@ const wishlistSlice = createSlice({
     initialState,
 
     reducers: {
-        toggleRestaurant: (state, action) => {
-            const id = action.payload;
+        addToWishlist(state, action) {
+            const restaurant = action.payload;
 
-            const exists = state.restaurants.includes(id);
+            const exists = state.items.find(
+                (item) => item.id === restaurant.id
+            );
 
-            state.restaurants = exists ?
-                state.restaurants.filter((item) => item !== id) :
-                [...state.restaurants, id];
+            if (!exists) {
+                state.items.push(restaurant);
+            }
         },
 
-        toggleFood: (state, action) => {
-            const id = action.payload;
-
-            const exists = state.foods.includes(id);
-
-            state.foods = exists ?
-                state.foods.filter((item) => item !== id) :
-                [...state.foods, id];
+        removeFromWishlist(state, action) {
+            state.items = state.items.filter(
+                (item) => item.id !== action.payload
+            );
         },
 
-        clearWishlist: (state) => {
-            state.restaurants = [];
-            state.foods = [];
+        toggleWishlist(state, action) {
+            const restaurant = action.payload;
+
+            const exists = state.items.find(
+                (item) => item.id === restaurant.id
+            );
+
+            if (exists) {
+                state.items = state.items.filter(
+                    (item) => item.id !== restaurant.id
+                );
+            } else {
+                state.items.push(restaurant);
+            }
+        },
+
+        clearWishlist(state) {
+            state.items = [];
         },
     },
 });
 
 export const {
-    toggleRestaurant,
-    toggleFood,
+    addToWishlist,
+    removeFromWishlist,
+    toggleWishlist,
     clearWishlist,
 } = wishlistSlice.actions;
 

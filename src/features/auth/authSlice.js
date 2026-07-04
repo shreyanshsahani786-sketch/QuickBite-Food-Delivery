@@ -1,12 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const getSavedUser = () => {
+    try {
+        const savedUser = localStorage.getItem("quickbite-user");
+
+        return savedUser ?
+            JSON.parse(savedUser) :
+            null;
+    } catch {
+        return null;
+    }
+};
+
+const savedUser = getSavedUser();
+
 const initialState = {
-    user: null,
-    accessToken: null,
-    refreshToken: null,
-    isAuthenticated: false,
-    isLoading: false,
-    error: null,
+    user: savedUser,
+    isAuthenticated: Boolean(savedUser),
 };
 
 const authSlice = createSlice({
@@ -15,55 +25,39 @@ const authSlice = createSlice({
     initialState,
 
     reducers: {
-        loginStart: (state) => {
-            state.isLoading = true;
-            state.error = null;
-        },
-
-        loginSuccess: (state, action) => {
-            state.isLoading = false;
-            state.user = action.payload.user;
-            state.accessToken = action.payload.accessToken;
-            state.refreshToken = action.payload.refreshToken;
+        login(state, action) {
+            state.user = action.payload;
             state.isAuthenticated = true;
-            state.error = null;
+
+            localStorage.setItem(
+                "quickbite-user",
+                JSON.stringify(action.payload)
+            );
         },
 
-        loginFailure: (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-            state.isAuthenticated = false;
+        registerUser(state, action) {
+            state.user = action.payload;
+            state.isAuthenticated = true;
+
+            localStorage.setItem(
+                "quickbite-user",
+                JSON.stringify(action.payload)
+            );
         },
 
-        updateUser: (state, action) => {
-            state.user = {
-                ...state.user,
-                ...action.payload,
-            };
-        },
-
-        logout: (state) => {
+        logout(state) {
             state.user = null;
-            state.accessToken = null;
-            state.refreshToken = null;
             state.isAuthenticated = false;
-            state.isLoading = false;
-            state.error = null;
-        },
 
-        clearAuthError: (state) => {
-            state.error = null;
+            localStorage.removeItem("quickbite-user");
         },
     },
 });
 
 export const {
-    loginStart,
-    loginSuccess,
-    loginFailure,
-    updateUser,
+    login,
+    registerUser,
     logout,
-    clearAuthError,
 } = authSlice.actions;
 
 export default authSlice.reducer;

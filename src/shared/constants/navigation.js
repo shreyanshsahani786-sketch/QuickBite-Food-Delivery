@@ -3,7 +3,6 @@ import {
     HiOutlineBuildingStorefront,
     HiOutlineShoppingCart,
     HiOutlineHeart,
-    HiOutlineUser,
 } from "react-icons/hi2";
 
 const navigation = [{
@@ -25,11 +24,6 @@ const navigation = [{
         label: "Cart",
         path: "/cart",
         icon: HiOutlineShoppingCart,
-    },
-    {
-        label: "Profile",
-        path: "/profile",
-        icon: HiOutlineUser,
     },
 ];
 

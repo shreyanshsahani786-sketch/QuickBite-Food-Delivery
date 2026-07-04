@@ -1,5 +1,11 @@
-export const selectWishlistRestaurants = (state) =>
-    state.wishlist.restaurants;
+export const selectWishlistItems = (state) =>
+    state.wishlist.items;
 
-export const selectWishlistFoods = (state) =>
-    state.wishlist.foods;
+export const selectWishlistCount = (state) =>
+    state.wishlist.items.length;
+
+export const isRestaurantWishlisted =
+    (id) => (state) =>
+    state.wishlist.items.some(
+        (item) => item.id === id
+    );

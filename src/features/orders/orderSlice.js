@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const getSavedOrders = () => {
+    try {
+        const orders = localStorage.getItem("quickbite-orders");
+
+        return orders ? JSON.parse(orders) : [];
+    } catch {
+        return [];
+    }
+};
+
 const initialState = {
-    orders: [],
-    currentOrder: null,
-    isLoading: false,
-    error: null,
+    orders: getSavedOrders(),
 };
 
 const orderSlice = createSlice({
@@ -13,36 +20,26 @@ const orderSlice = createSlice({
     initialState,
 
     reducers: {
-        fetchOrdersStart: (state) => {
-            state.isLoading = true;
+        placeOrder(state, action) {
+            state.orders.unshift(action.payload);
+
+            localStorage.setItem(
+                "quickbite-orders",
+                JSON.stringify(state.orders)
+            );
         },
 
-        fetchOrdersSuccess: (state, action) => {
-            state.orders = action.payload;
-            state.isLoading = false;
-        },
+        clearOrders(state) {
+            state.orders = [];
 
-        fetchOrdersFailure: (state, action) => {
-            state.error = action.payload;
-            state.isLoading = false;
-        },
-
-        setCurrentOrder: (state, action) => {
-            state.currentOrder = action.payload;
-        },
-
-        clearCurrentOrder: (state) => {
-            state.currentOrder = null;
+            localStorage.removeItem("quickbite-orders");
         },
     },
 });
 
 export const {
-    fetchOrdersStart,
-    fetchOrdersSuccess,
-    fetchOrdersFailure,
-    setCurrentOrder,
-    clearCurrentOrder,
+    placeOrder,
+    clearOrders,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

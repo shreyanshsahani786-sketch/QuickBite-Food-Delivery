@@ -1,36 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loadCart } from "./utils";
 
 const initialState = {
-    items: [],
-    totalItems: 0,
-    totalQuantity: 0,
-    subtotal: 0,
-    deliveryFee: 40,
-    discount: 0,
-    tax: 0,
-    total: 0,
-};
-
-const calculateCartTotals = (state) => {
-    state.totalItems = state.items.length;
-
-    state.totalQuantity = state.items.reduce(
-        (total, item) => total + item.quantity,
-        0
-    );
-
-    state.subtotal = state.items.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-    );
-
-    state.tax = Number((state.subtotal * 0.05).toFixed(2));
-
-    state.total =
-        state.subtotal +
-        state.deliveryFee +
-        state.tax -
-        state.discount;
+    items: loadCart(),
 };
 
 const cartSlice = createSlice({
@@ -39,7 +11,7 @@ const cartSlice = createSlice({
     initialState,
 
     reducers: {
-        addToCart: (state, action) => {
+        addToCart(state, action) {
             const item = action.payload;
 
             const existingItem = state.items.find(
@@ -50,83 +22,61 @@ const cartSlice = createSlice({
                 existingItem.quantity += 1;
             } else {
                 state.items.push({
-                    ...item,
+                    id: item.id,
+                    restaurantId: item.restaurantId,
+                    restaurantName: item.restaurantName,
+                    name: item.name,
+                    image: item.image,
+                    price: item.price,
+                    veg: item.veg,
+                    rating: item.rating,
                     quantity: 1,
                 });
             }
-
-            calculateCartTotals(state);
         },
-
-        removeFromCart: (state, action) => {
-            state.items = state.items.filter(
-                (item) => item.id !== action.payload
-            );
-
-            calculateCartTotals(state);
-        },
-
-        increaseQuantity: (state, action) => {
+        increaseQuantity(state, action) {
             const item = state.items.find(
-                (item) => item.id === action.payload
+                (i) => i.id === action.payload
             );
 
             if (item) {
-                item.quantity += 1;
+                item.quantity++;
             }
-
-            calculateCartTotals(state);
         },
 
-        decreaseQuantity: (state, action) => {
+        decreaseQuantity(state, action) {
             const item = state.items.find(
-                (item) => item.id === action.payload
+                (i) => i.id === action.payload
             );
 
             if (!item) return;
 
-            if (item.quantity > 1) {
-                item.quantity -= 1;
-            } else {
+            if (item.quantity === 1) {
                 state.items = state.items.filter(
-                    (cartItem) => cartItem.id !== action.payload
+                    (i) => i.id !== action.payload
                 );
+            } else {
+                item.quantity--;
             }
-
-            calculateCartTotals(state);
         },
 
-        applyDiscount: (state, action) => {
-            state.discount = action.payload;
-
-            calculateCartTotals(state);
+        removeFromCart(state, action) {
+            state.items = state.items.filter(
+                (i) => i.id !== action.payload
+            );
         },
 
-        updateDeliveryFee: (state, action) => {
-            state.deliveryFee = action.payload;
-
-            calculateCartTotals(state);
-        },
-
-        clearCart: (state) => {
+        clearCart(state) {
             state.items = [];
-            state.totalItems = 0;
-            state.totalQuantity = 0;
-            state.subtotal = 0;
-            state.tax = 0;
-            state.discount = 0;
-            state.total = 0;
         },
     },
 });
 
 export const {
     addToCart,
-    removeFromCart,
     increaseQuantity,
     decreaseQuantity,
-    applyDiscount,
-    updateDeliveryFee,
+    removeFromCart,
     clearCart,
 } = cartSlice.actions;
 

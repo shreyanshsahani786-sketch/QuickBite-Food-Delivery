@@ -8,6 +8,8 @@ import searchReducer from "@/features/search/searchSlice";
 import wishlistReducer from "@/features/wishlist/wishlistSlice";
 import orderReducer from "@/features/orders/orderSlice";
 import uiReducer from "@/features/ui/uiSlice";
+import { saveCart } from "@/features/cart/utils";
+import { saveWishlist } from "@/features/wishlist/utils";
 
 const store = configureStore({
     reducer: {
@@ -27,6 +29,15 @@ const store = configureStore({
     },
 
     devTools: import.meta.env.DEV,
+
 });
+
+store.subscribe(() => {
+    const state = store.getState();
+
+    saveCart(state.cart.items);
+    saveWishlist(state.wishlist.items);
+});
+
 
 export default store;

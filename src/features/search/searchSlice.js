@@ -2,45 +2,55 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     query: "",
-    recentSearches: [],
-    suggestions: [],
+    rating: "",
+    deliveryTime: "",
+    cuisine: "",
+    sortBy: "",
 };
 
 const searchSlice = createSlice({
     name: "search",
+
     initialState,
 
     reducers: {
-        setQuery: (state, action) => {
+        setQuery(state, action) {
             state.query = action.payload;
         },
 
-        addRecentSearch: (state, action) => {
-            const value = action.payload.trim();
-
-            if (!value) return;
-
-            state.recentSearches = [
-                value,
-                ...state.recentSearches.filter((item) => item !== value),
-            ].slice(0, 10);
+        setRating(state, action) {
+            state.rating = action.payload;
         },
 
-        clearRecentSearches: (state) => {
-            state.recentSearches = [];
+        setDeliveryTime(state, action) {
+            state.deliveryTime = action.payload;
         },
 
-        setSuggestions: (state, action) => {
-            state.suggestions = action.payload;
+        setCuisine(state, action) {
+            state.cuisine = action.payload;
+        },
+
+        setSortBy(state, action) {
+            state.sortBy = action.payload;
+        },
+
+        clearFilters(state) {
+            state.query = "";
+            state.rating = "";
+            state.deliveryTime = "";
+            state.cuisine = "";
+            state.sortBy = "";
         },
     },
 });
 
 export const {
     setQuery,
-    addRecentSearch,
-    clearRecentSearches,
-    setSuggestions,
+    setRating,
+    setDeliveryTime,
+    setCuisine,
+    setSortBy,
+    clearFilters,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

@@ -8,6 +8,7 @@
         index: true,
         element: <HomePage />,
       },
+      
     ],
   },
 ];

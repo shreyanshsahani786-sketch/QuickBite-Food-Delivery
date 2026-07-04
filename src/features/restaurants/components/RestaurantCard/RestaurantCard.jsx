@@ -7,10 +7,17 @@ import {
 } from "react-icons/hi2";
 
 import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
-import { toggleRestaurant } from "@/features/wishlist/wishlistSlice";
+import { useAppSelector } from "@/shared/hooks/useAppSelector";
+
+import { toggleWishlist } from "@/features/wishlist/wishlistSlice";
+import { isRestaurantWishlisted } from "@/features/wishlist/selectors";
 
 function RestaurantCard({ restaurant }) {
   const dispatch = useAppDispatch();
+
+  const wishlisted = useAppSelector(
+    isRestaurantWishlisted(restaurant.id)
+  );
 
   return (
     <motion.article
@@ -22,7 +29,7 @@ function RestaurantCard({ restaurant }) {
       }}
       className="group overflow-hidden rounded-3xl bg-white shadow-md transition hover:shadow-2xl"
     >
-      {/* IMAGE */}
+      {/* Image */}
 
       <div className="relative overflow-hidden">
 
@@ -33,19 +40,23 @@ function RestaurantCard({ restaurant }) {
           className="h-64 w-full object-cover transition duration-500 group-hover:scale-110"
         />
 
-        {/* Overlay */}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent" />
 
         {/* Wishlist */}
 
         <button
           onClick={() =>
-            dispatch(toggleRestaurant(restaurant.id))
+            dispatch(toggleWishlist(restaurant))
           }
           className="absolute right-4 top-4 rounded-full bg-white p-3 shadow-lg transition hover:scale-110"
         >
-          <HiHeart className="text-red-500" />
+          <HiHeart
+            className={`text-xl transition ${
+              wishlisted
+                ? "fill-red-500 text-red-500"
+                : "text-gray-400"
+            }`}
+          />
         </button>
 
         {/* Promoted */}
@@ -68,7 +79,7 @@ function RestaurantCard({ restaurant }) {
 
       </div>
 
-      {/* BODY */}
+      {/* Body */}
 
       <div className="space-y-4 p-5">
 
@@ -105,11 +116,12 @@ function RestaurantCard({ restaurant }) {
 
         </div>
 
-        <button className="w-full rounded-xl bg-orange-500 py-3 font-semibold text-white transition hover:bg-orange-600">
-
+        <Link
+          to={`/restaurants/${restaurant.id}`}
+          className="block rounded-xl bg-orange-500 py-3 text-center font-semibold text-white transition hover:bg-orange-600"
+        >
           View Menu
-
-        </button>
+        </Link>
 
       </div>
     </motion.article>
